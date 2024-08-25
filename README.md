@@ -5,12 +5,13 @@ Spring Boot - Spring MVC - Spring Security - Oauth Google - Spring Data JPA - Th
 
 ## Dans ce projet, nous utiliserons les technologies suivantes pour créer une application Spring Boot complète et robuste.
 
-- HEBERGEMENT
+### HEBERGEMENT
 
-- Le projet est déployé sur Kubernetes sur une VM.
-J'utilise un ordinateur Intel i7 et 32 Go de RAM, transformé en hyperviseur de type 1. Le système d'exploitation est Ubuntu 22.04, avec KVM et la bibliothèque Libvirt pour la gestion de la virtualisation.
+- Le projet est déployé sur un cluster Kubernetes.
+- J'utilise un ordinateur Intel i7 avec 32 Go de RAM, transformé en hyperviseur de type 1.
+- Le système d'exploitation est Ubuntu 22.04, avec KVM et la bibliothèque Libvirt pour la gestion de la virtualisation.
 
-- KAFKA
+### KAFKA
 
 - Création de microservice avec Spring Boot qui utilise Apache Kafka pour produire et consommer des événements d'email.
 - Cela garantit une communication asynchrone et une haute fiabilité pour les envois d'emails.
