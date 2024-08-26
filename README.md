@@ -8,8 +8,8 @@ Spring Boot - Spring MVC - Spring Security - Oauth Google - Spring Data JPA - Th
 ### HEBERGEMENT
 
 - Le projet est déployé sur un cluster Kubernetes.
-- J'utilise un ordinateur Intel i7 avec 32 Go de RAM, transformé en hyperviseur de type 1.
-- Le système d'exploitation est Ubuntu 22.04, avec KVM et la bibliothèque Libvirt pour la gestion de la virtualisation.
+- PC Intel i7 avec 32 Go de RAM, transformé en hyperviseur de type 1.
+- OS Ubuntu 22.04, avec KVM et la bibliothèque Libvirt pour la gestion de la virtualisation.
 
 ### KAFKA
 
