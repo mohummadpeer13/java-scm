@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="x-apple-disable-message-reformatting">
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+	<style>
+		table,
+		td {
+			mso-table-lspace: 0pt !important;
+			mso-table-rspace: 0pt !important;
+		}
+
+		table {
+			border-spacing: 0 !important;
+			border-collapse: collapse !important;
+			table-layout: fixed !important;
+			margin: 0 auto !important;
+		}
+
+		@media only screen and (max-width: 799px) {
+			u~div .email-container {
+				min-width: 100% !important;
+			}
+
+			u~div .txt-container {
+				min-width: 100% !important;
+			}
+
+			img {
+				width: 100% !important;
+			}
+		}
+
+		.button {
+			display: inline-block;
+			padding: 10px 25px;
+			font-size: 16px;
+			font-weight: bold;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: white;
+			background-color: #0c8de9;
+			border: none;
+			border-radius: 25px;
+		}
+
+		.button:hover {
+			background-color: #05195a
+		}
+	</style>
+</head>
+
+<body>
+	<div style="width: 100%;">
+
+		<div style="width: 100%;">
+
+			<div style="display: flex; justify-content: center; max-width:200px; margin: auto auto; margin-top:20px;">
+				<img src="https://images2.imgbox.com/cb/ad/Ske3tWje_o.png" style=" max-width: 50%;
+  height: auto;">
+			</div>
+
+			<div style="max-width: 800px; margin: 0 auto;" class="txt-container">
+				<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
+					style="margin: auto;">
+					<tr style="padding-top: 25px;">
+						<td align="center" valign="top">
+							<div>
+								<h3 th:text="${'Bienvenue ' + sendPseudo}"></h3>
+								<h4>Merci pour votre inscription sur SCM 2.0.</h4>
+								<h4>Dernière étape, finalisez votre inscription</h4>
+								<h4>en cliquant sur ce bouton</h4>
+
+								<a th:href="${emailLink}" class="button">Je valider mon email</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+</body>
+
+</html>

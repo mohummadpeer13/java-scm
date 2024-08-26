@@ -1,0 +1,86 @@
+<nav data-th-fragment="navbar" class="bg-white border-gray-900 shadow-sm dark:bg-gray-900">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <!-- brand -->
+    <a data-th-src="@{'/'}" class="flex items-center space-x-4 rtl:space-x-reverse">
+      <img src="/images/telephone.png" class="h-12 shadow rounded-full" alt="Logo" />
+      <span class="self-center text-2xl font-semibold whitespace-nowrap">SCM2.0</span>
+    </a>
+
+    <!-- end of brand logo -->
+    <div class="flex md:order-2 space-x-5 rtl:space-x-reverse">
+
+      <a th:if="${loggedInUser}" data-th-href="@{'/user/dashboard'}" type="button"
+        class="hidden md:block text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-2 py-2 text-center">
+        Dashboard
+      </a>
+
+      <a th:if="${loggedInUser}" data-th-href="@{'/logout'}" type="button"
+        class="hidden md:block text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-2 py-2 text-center">
+        Déconnexion
+      </a>
+
+      <a th:unless="${loggedInUser}" data-th-href="@{'/login'}" type="button"
+        class="hidden md:block text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-2 py-2 text-center">
+        Connexion
+      </a>
+      <a th:unless="${loggedInUser}" data-th-href="@{'/register'}" type="button"
+        class="hidden md:block text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-2 py-2 text-center">
+        Inscription
+      </a>
+
+      <!-- icons to open menu on small screen -->
+      <button data-collapse-toggle="navbar-cta" type="button"
+        class="inline-flex items-center p-2 w-12 h-12 justify-center text-sm text-gray-900 rounded-lg md:hidden hover:bg-gray-100 foutline-none ring-2 ring-gray-200"
+        aria-controls="navbar-cta" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- menus -->
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
+      <ul
+        class="flex flex-col font-medium p-2 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-100 md:space-x-12 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+        
+        <li>
+          <a th:if="${loggedInUser}"data-th-href="@{'/user/dashboard'}" class="block md:hidden mb-2 p-2 text-md text-white rounded bg-blue-700 hover:bg-blue-900"
+            aria-current="page">Dashboard</a>
+        </li>
+
+        <li>
+          <a th:unless="${loggedInUser}"data-th-href="@{'/login'}" class="block md:hidden mb-2 p-2 text-md text-white rounded bg-blue-700 hover:bg-blue-900"
+            aria-current="page">Connexion</a>
+        </li>
+
+        <li>
+          <a th:unless="${loggedInUser}" data-th-href="@{'/register'}" class="block md:hidden p-2 text-md text-white rounded bg-blue-700 hover:bg-blue-900"
+            aria-current="page">Inscription</a>
+        </li>
+
+        <li>
+          <a data-th-href="@{'/'}" class="block p-2 text-md md:p-0 md:text-lg rounded hover:text-blue-700"
+            aria-current="page">Accueil</a>
+        </li>
+
+        <li>
+          <a data-th-href="@{'/services'}"
+            class="block p-2 text-md md:p-0 md:text-lg rounded hover:text-blue-700">Services</a>
+        </li>
+
+        <li>
+          <a data-th-href="@{'/about'}" class="block p-2 text-md md:p-0 md:text-lg rounded hover:text-blue-700">A
+            Propos</a>
+        </li>
+
+        <li>
+          <a th:if="${loggedInUser}" data-th-href="@{'/logout'}" class="block md:hidden mt-2 p-2 text-md text-white rounded bg-blue-700 hover:bg-blue-900"
+            aria-current="page">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>

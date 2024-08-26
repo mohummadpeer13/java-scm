@@ -1,0 +1,86 @@
+version: '3.8'
+volumes:
+    mysqldb_data:
+services:
+  scm-api:
+    container_name: scm-api
+    build: ../scm-api/.
+    image: rogerranium/scm-api
+    ports:
+      - "8080:8080"
+      - "61000:61000"
+      - "80:80"
+      - "443:443"
+    expose:
+      - 61000
+    environment:
+      - APP_URL=${APP_URL}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQLDB_HOST}:${MYSQLDB_PORT}/${MYSQLDB_DATABASE}?serverTimezone=UTC&UseUnicode=true&amp&characterEncoding=utf8
+      - SPRING_DATASOURCE_USERNAME=${MYSQLDB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=${KAFKA_HOST}:${KAFKA_PORT}
+      - SPRING.SECURITY.OAUTH2.CLIENT.REGISTRATION.GOOGLE.CLIENT-ID=${GOOGLE_CLIENT_ID}
+      - SPRING.SECURITY.OAUTH2.CLIENT.REGISTRATION.GOOGLE.CLIENT-SECRET=${GOOGLE_CLIENT_SECRET}
+      - CLOUDINARY.CLOUD.NAME=${CLOUDINARY_NAME}
+      - CLOUDINARY.API.KEY=${CLOUDINARY_KEY}
+      - CLOUDINARY.API.SECRET=${CLOUDINARY_SECRET}
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+
+  scm-mailer:
+    container_name: scm-mailer
+    build: ../scm-mailer/.
+    image: rogerranium/scm-mailer
+    ports:
+      - "8081:8081"
+    expose:
+      - 8081
+    environment:
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=${KAFKA_HOST}:${KAFKA_PORT}
+      - SPRING.MAIL.USERNAME=${GOOGLE_MAIL_USERNAME}
+      - SPRING.MAIL.PASSWORD=${GOOGLE_MAIL_PASSWORD}
+    depends_on:
+      - kafka
+
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQLDB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQLDB_DATABASE}
+      MYSQL_USER: devteam
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - mysqldb_data:/var/lib/mysql
+    ports:
+      - "${MYSQLDB_PORT}:${MYSQLDB_PORT}"
+    expose:
+      - "${MYSQLDB_PORT}"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 15
+      interval: 3s
+      timeout: 30s
+      
+  kafka:
+    container_name: kafka
+    image: wurstmeister/kafka
+    restart: always
+    ports:
+      - "${KAFKA_PORT}:${KAFKA_PORT}"
+    environment:
+      #KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "sendMail:1:1"
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    container_name: zookeeper
+    image: wurstmeister/zookeeper
+    restart: always
+    ports:
+      - "2181:2181"

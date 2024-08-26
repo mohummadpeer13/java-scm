@@ -1,0 +1,23 @@
+<!-- using fragment/base : parent fragment-->
+<!-- vous pouvez aussi passer des données en paramètres
+     <div th:insert="~{fragment/base :: parent('un','deux')}"></div> -->
+
+<!-- for id #
+    <div th:replace="~{fragment/base :: parent(~{::#class_content})}">
+        
+        for class .
+    <div th:replace="~{fragment/base :: parent(~{::.class_content})}">
+-->
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragment/base :: parent(~{::#id_content},'A Propos')}">
+
+<head></head>
+<section id="id_content">
+    Test about page
+</section>
+<body>
+
+</body>
+
+</html>

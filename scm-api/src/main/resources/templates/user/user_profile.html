@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragment/base :: parent(~{::#id_content},'Mon profil')}">
+
+<head></head>
+
+<body>
+    <section id="id_content">
+        <div class="mx-4 grid grid-cols-12 mt-4">
+
+            <div class="col-span-2 xl:col-span-3"></div>
+            <div class="col-span-12 sm:col-span-8 xl:col-span-6">
+                <div class="block p-6 border-t-[10px] border-blue-700 bg-white rounded-xl shadow hover:bg-gray-100">
+
+                    <h5 class="mb-4 text-center text-2xl font-bold tracking-tight text-gray-900">Mon profil</h5>
+
+                    <!-- message fragment -->
+                    <div data-th-replace="~{fragment/message :: message}"></div>
+
+                    
+                    <!-- form post-->
+                    <form data-th-action="@{'/user/profile/'+ ${userId}}" method="post" enctype="multipart/form-data"
+                        data-th-object="${userProfileForm}" class="mt-5" novalidate>
+
+                        <!-- user image -->
+                        <div class="mb-3 flex flex-col items-center">
+                            <div class="flex flex-row relative max-h-32 w-fit">
+                                <img class="max-h-32 rounded-lg shadow" data-th-src="*{userPic}" id="user_image_preview"
+                                    alt="" />
+                            </div>
+                            <div class="mt-4">
+                                <button type="button" class="px-3 py-2 rounded bg-blue-700 text-white" id="choice"
+                                    onclick="document.getElementById('file').click();">Modifier ma photo
+                                </button>
+                            </div>
+                            <div>
+                                <input data-th-field="*{userImage}" type="file" name="file" id="file"
+                                    style="display: none;" accept=".png,.jpeg,.jpg,.gif"
+                                    onchange="loadUserPicture(event)" />
+                            </div>
+                        </div>
+
+                        <input data-th-field="*{userPic}" type="text"
+                                    class="hidden"
+                                    placeholder="" />
+
+                        <!-- email -->
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                            <div class="relative mb-1">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <i class="fa-regular w-4 h-4 fa-envelope"></i>
+                                </div>
+                                <input data-th-field="*{email}" type="text" readonly
+                                    class="bg-gray-100 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                    placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <!-- pseudo -->
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Pseudo</label>
+                            <div class="relative mb-1">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <i class="fa-regular w-4 h-4 fa-user"></i>
+                                </div>
+                                <input data-th-field="*{pseudo}" type="text"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                    placeholder="Pseudo" />
+                            </div>
+                            <p data-th-if="${#fields.hasErrors('pseudo')}" data-th-errors="*{pseudo}"
+                                class="text-red-600 text-sm pt-2">erreur</p>
+                        </div>
+
+                        <!-- password -->
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Mot de passe</label>
+                            <div class="relative mb-1">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <i class="fa-regular w-4 h-4 fa-eye"></i>
+                                </div>
+                                <input type="password" name="password" id="password" autocomplete="new-password"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                    placeholder="Mot de passe" />
+                            </div>
+                            <p data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}"
+                                class="text-red-600 text-sm pt-2">erreur</p>
+                        </div>
+
+                        <!-- description -->
+                        <div class="mb-4">
+                            <label for="description"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descriptif</label>
+                            <textarea rows="6" id="description" data-th-field="*{description}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="Ecris quelque chose sur toi"></textarea>
+                        </div>
+
+                        <div class="mb-4 flex flex-row justify-center">
+                            <div class="w-1/2 flex flex-row justify-center">
+                                <button type="submit" class="px-3 py-2 rounded bg-blue-700 text-white font-bold">
+                                    Modifier
+                                </button>
+                            </div>
+                            <div class="w-1/2 flex flex-row justify-center">
+                                <a data-th-href="@{'/'}" type="button"
+                                    class="px-3 py-2 rounded bg-orange-800 text-white font-bold">
+                                    Annuler
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            function loadUserPicture() {
+                document.getElementById('user_image_preview').src = URL.createObjectURL(event.target.files[0]);
+                //document.getElementById('deletePict').src = "/img/delete.png";
+            };
+        </script>
+    </section>
+
+</body>
+
+</html>

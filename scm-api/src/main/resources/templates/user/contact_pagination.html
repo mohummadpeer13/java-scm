@@ -1,0 +1,52 @@
+<div data-th-fragment="pagination">
+    <!-- pagination component  -->
+    <div data-th-if="${pageContact.totalElements>0}" class="pagination_container bg-white p-5 text-center">
+        <nav aria-label="Page navigation example">
+            <ul class="inline-flex -space-x-px text-base h-10">
+
+                <li data-th-unless="${pageContact.first}">
+                    <a data-th-if="${pageSearch == 'false'}"
+                        data-th-href="@{'/user/contacts/list?size='+${pageSize}+'&page=' + ${pageContact.number-1}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-blue-200 hover:text-gray-700">Précédent</a>
+
+                    <a data-th-if="${pageSearch == 'true'}"
+                        data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page=' + ${pageContact.number-1} + '&fields=' + ${contactSearchForm.fields} + '&keyword=' + ${contactSearchForm.keyword} }"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-blue-200 hover:text-gray-700">Précédent</a>
+
+                </li>
+
+                <li data-th-each="index :  ${#numbers.sequence(0,pageContact.totalPages-1)}">
+                    <a data-th-if="${pageSearch == 'false'}"
+                        data-th-href="@{'/user/contacts/list?size='+${pageSize}+'&page='+${index}}" href="#"
+                        data-th-classappend="${index==pageContact.number? 'bg-blue-200  dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                        <span data-th-text="${index+1}"></span>
+                    </a>
+
+                    <a data-th-if="${pageSearch == 'true'}"
+                        data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${index} + '&fields=' + ${contactSearchForm.fields} + '&keyword=' + ${contactSearchForm.keyword} }"
+                        href="#"
+                        data-th-classappend="${index==pageContact.number? 'bg-blue-200  dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                        <span data-th-text="${index+1}"></span>
+                    </a>
+                </li>
+
+                <li data-th-unless="${pageContact.last}">
+
+                    <a data-th-if="${pageSearch == 'false'}"
+                        data-th-href="@{'/user/contacts/list?size='+${pageSize}+'&page=' + ${pageContact.number+1}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-blue-200 hover:text-gray-700">Suivant</a>
+
+                    <a data-th-if="${pageSearch == 'true'}"
+                        data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page=' + ${pageContact.number+1} + '&fields=' + ${contactSearchForm.fields} + '&keyword=' + ${contactSearchForm.keyword} }"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-blue-200 hover:text-gray-700">Suivant</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

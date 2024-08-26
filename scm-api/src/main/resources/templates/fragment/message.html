@@ -1,0 +1,67 @@
+<div data-th-fragment="message">
+    <!-- register.html inscription success -->
+    <div class="bg-blue-200 p-4 rounded-xl" th:if="${param.inscriptionSuccess}">
+        <p class="text-center font-bold my-4">Votre inscription est terminé !!!</p>
+        <p class="text-center font-bold mb-8">Merci de valider le lien envoyé sur votre email.</p>
+
+        <div class="flex justify-center mt-4">
+            <a data-th-href="@{'/'}" type="button" class="px-3 py-2 rounded bg-blue-800 font-bold text-white">
+                Retour
+            </a>
+        </div>
+    </div>
+
+    <!-- register.html email exist -->
+    <div class="bg-red-100 p-4 rounded-xl text-red-600 font-bold" th:if="${emailExist}">
+        <p class="text-center">Cet email est déjà enregistré !!!</p>
+    </div>
+
+    <!-- user_profile.html password error -->
+    <div class="bg-red-100 p-4 rounded-xl text-red-600 font-bold" th:if="${errorPassword}">
+        <p class="text-center">Vous souhaitez modifier votre mot de passe.</p>
+        <p class="text-center">Il doit contenir au minimum 6 caractères.</p>
+    </div>
+
+
+    <!-- login.html email or password error -->
+    <div class="bg-red-100 p-4 rounded-xl text-red-600 font-bold" th:if="${param.error}">
+        <p class="text-center">Email ou mot de passe incorrect !!!</p>
+    </div>
+
+    <!-- login.html token after register success -->
+    <div class="bg-blue-200 p-4 rounded-xl" th:if="${param.tokenSuccess}">
+        <p class="text-center font-bold my-2">Votre email est validé.</p>
+        <p class="text-center font-bold mb-2">Vous pouvez maintenant vous connecter.</p>
+    </div>
+
+    <!-- login.html token after register error -->
+    <div class="bg-red-200 p-4 rounded-xl" th:if="${param.tokenError}">
+        <p class="text-center font-bold my-2">Erreur de connexion !!!</p>
+        <p class="text-center font-bold mb-2">Merci de contacter admin du site.</p>
+    </div>
+
+
+    <!-- contact_add.html rajout contact success -->
+    <div class="bg-blue-200 mt-4 p-4 rounded-xl" th:if="${param.contactSuccess}">
+        <p class="text-center font-bold">Ce contact a bien été rajouté !!!</p>
+
+        <div class="flex justify-center mt-4">
+            <a data-th-href="@{'/user/dashboard'}" type="button"
+                class="px-3 py-2 rounded bg-blue-800 font-bold text-white mr-4">
+                Dahsboard
+            </a>
+
+            <a data-th-href="@{'/user/contacts/list'}" type="button"
+                class="px-3 py-2 rounded bg-blue-800 font-bold text-white ml-4">
+                Listes contacts
+            </a>
+        </div>
+    </div>
+
+    <!-- contact_add.html image depasse 2MB -->
+    <div id="err_contact_image" style="display:none;" class="mt-4 bg-red-100 p-4 rounded-xl text-red-600 font-bold">
+        <p class="text-center">La photo que vous souhaitez télécharger est trop volumineux.</p>
+        <p class="text-center">Celle ci doit être inférieur à 2 Mb.</p>
+    </div>
+
+</div>

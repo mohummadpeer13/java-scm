@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragment/base :: parent(~{::#id_content},'Inscription')}">
+
+<head></head>
+<section id="id_content">
+    <div class="mx-4 grid grid-cols-12 mt-4">
+
+        <div class="col-span-2 xl:col-span-3"></div>
+
+        <div class="col-span-12 sm:col-span-8 xl:col-span-6">
+            <div class="block p-6 border-t-[10px] border-blue-700 bg-white rounded-xl shadow hover:bg-gray-100">
+
+                <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">INSCRIPTION</h5>
+
+                <!-- message fragment -->
+                <div data-th-replace="~{fragment/message :: message}"></div>
+
+                <!-- form post-->
+                <form th:unless="${param.inscriptionSuccess}" data-th-action="@{'/register'}" method="post"
+                    data-th-object="${registerForm}" class="mt-5" novalidate>
+
+                    <!-- inputs -->
+                    <div class="mb-4">
+                        <label for="username"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pseudo</label>
+                        <input type="text" id="pseudo" data-th-field="*{pseudo}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Pseudo" required />
+
+                        <p data-th-if="${#fields.hasErrors('pseudo')}" data-th-errors="*{pseudo}"
+                            class="text-red-600 text-sm pt-2">erreur</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="email"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <input type="email" id="email" data-th-field="*{email}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Email" required />
+
+                        <p data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}"
+                            class="text-red-600 text-sm pt-2">erreur</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot
+                            de
+                            passe</label>
+                        <input type="password" id="password" data-th-field="*{password}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Mot de passe" required />
+
+                        <p data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}"
+                            class="text-red-600 text-sm pt-2">erreur</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descriptif</label>
+                        <textarea rows="6" id="description" data-th-field="*{description}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Ecris quelque chose sur toi"></textarea>
+                    </div>
+
+                    <div class="mb-4 flex flex-row justify-center">
+                        <div class="w-1/2 flex flex-row justify-center">
+                            <button type="submit" class="px-3 py-2 rounded bg-blue-700 text-white font-bold">
+                                S'inscrire
+                            </button>
+                        </div>
+                        <div class="w-1/2 flex flex-row justify-center">
+                            <a data-th-href="@{'/'}" type="button"
+                                class="px-3 py-2 rounded bg-orange-800 text-white font-bold">
+                                Annuler
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+</html>

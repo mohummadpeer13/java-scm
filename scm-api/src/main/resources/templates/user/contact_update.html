@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragment/base :: parent(~{::#id_content},'Nouveau contact')}">
+
+<head></head>
+
+<body>
+    <section id="id_content">
+        <div class="mx-4 grid grid-cols-12 mt-4">
+
+            <div class="col-span-2 xl:col-span-3"></div>
+            <div class="col-span-12 sm:col-span-8 xl:col-span-6">
+                <div class="block p-6 border-t-[10px] border-blue-700 bg-white rounded-xl shadow hover:bg-gray-100">
+
+                    <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900">Mofidier un contact</h5>
+                    <p class="font-bold text-gray-400">Ce contact sera stocké sur le cloud, vous pouvez envoyer
+                        directement
+                        un e-mail à ce client depuis Scm 2.0</p>
+
+                    <!-- message fragment -->
+                    <div data-th-replace="~{fragment/message :: message}"></div>
+
+                    <!-- form post-->
+                    <form data-th-action="@{'/user/contacts/update/' + ${contactId}}" method="post"
+                        enctype="multipart/form-data" data-th-object="${updateContactForm}" class="mt-5" novalidate>
+
+                            <!-- name -->
+                            <div class="mb-3">
+                                <label for="input-group-1"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom du
+                                    contact</label>
+                                <div class="relative mb-1">
+                                    <div
+                                        class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                        <i class="fa-regular w-4 h-4 fa-user"></i>
+                                    </div>
+                                    <input data-th-field="*{name}" type="text"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="name" />
+                                </div>
+                                <p class="text-red-500" data-th-if="${#fields.hasErrors('name')}"
+                                    data-th-errors="*{name}">
+                                    Invalid Name
+                                </p>
+                            </div>
+
+                            <!-- email -->
+                            <div class="mb-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                                <div class="relative mb-1">
+                                    <div
+                                        class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                        <i class="fa-regular w-4 h-4 fa-envelope"></i>
+                                    </div>
+                                    <input data-th-field="*{email}" type="text"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                        placeholder="Email" />
+                                </div>
+                                <p data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}"
+                                    class="text-red-600 text-sm pt-2">erreur</p>
+                            </div>
+
+                            <!-- telephone -->
+                            <div class="mb-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">Téléphone</label>
+                                <div class="relative mb-1">
+                                    <div
+                                        class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                        <i class="fa-solid w-4 h-4 fa-phone"></i>
+                                    </div>
+                                    <input data-th-field="*{phoneNumber}" type="text"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                        placeholder="Téléphone" maxlength="10" />
+                                </div>
+                                <p data-th-if="${#fields.hasErrors('phoneNumber')}" data-th-errors="*{phoneNumber}"
+                                    class="text-red-600 text-sm pt-2">erreur</p>
+                            </div>
+
+                            <!-- contact image -->
+                            <div class="mb-3">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">Photo</label>
+
+                                <input type="file" accept=".png,.jpeg,.jpg,.gif"
+                                    class="block w-full mb-2 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                                    data-th-field="*{contactImage}" id="contact_image_input" name="contact_image_input"
+                                    onchange="loadContactImage(event)" />
+
+                                <div class="flex flex-row relative max-h-52 w-fit">
+                                    <img class="max-h-52 rounded-lg shadow" data-th-src="*{picture}"
+                                        id="contact_image_preview" alt="" />
+                                    <img class="max-h-12 absolute right-0" src="" id="button_delete" alt="">
+                                </div>
+
+                            </div>
+
+                            <!-- adresse -->
+                            <div class="mb-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">
+                                    Adresse</label>
+                                <textarea data-th-field="*{address}" rows="3"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Adresse"></textarea>
+                            </div>
+
+                            <!-- description -->
+                            <div class="mb-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900">
+                                    Description</label>
+                                <textarea data-th-field="*{description}" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Quelques mots sur votre contact..."></textarea>
+                            </div>
+
+                            <!-- Social Link -->
+                            <div class="flex flex-col md:flex-row md:space-x-3">
+                                <div class="w-full">
+                                    <!-- website  link  -->
+
+                                    <div class="relative mb-6">
+                                        <div
+                                            class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                            <i class="fa-solid w-4 h-4 fa-earth-americas"></i>
+                                        </div>
+                                        <input data-th-field="*{websiteLink}" type="text"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                            placeholder="Site Web" />
+                                    </div>
+
+                                </div>
+                                <div class="w-full">
+                                    <!-- linkedin  link  -->
+
+                                    <div class="relative mb-6">
+                                        <div
+                                            class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                            <i class="fa-brands w-4 h-4 fa-linkedin"></i>
+                                        </div>
+                                        <input data-th-field="*{linkedInLink}" type="text"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                            placeholder="Linkedin" />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- ajouter au favoris -->
+                            <div class="flex items-center mb-8">
+                                <input data-th-field="*{favorite}" type="checkbox"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+                                <label for="default-checkbox"
+                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rajouter ce
+                                    contact
+                                    dans
+                                    mes favoris</label>
+                            </div>
+
+
+                            <!-- boutons -->
+                            <div class="mb-4 flex flex-row justify-center">
+                                <div class="w-1/2 flex flex-row justify-center">
+                                    <button type="submit" class="px-3 py-2 rounded bg-blue-700 text-white font-bold">
+                                        Modifier
+                                    </button>
+                                </div>
+                                <div class="w-1/2 flex flex-row justify-center">
+                                    <a href="javascript:window.history.back()" type="button"
+                                        class="px-3 py-2 rounded bg-orange-800 text-white font-bold">
+                                        Annuler
+                                    </a>
+                                </div>
+                            </div>
+
+                        </form>
+
+                </div>
+            </div>
+        </div>
+        <script>
+
+            function loadContactImage() {
+                let image = document.getElementById('contact_image_input');
+                let maxMb = 2;
+                let kb = image.files[0].size / 1024; // convert the file size into byte to kb
+                let mb = kb / 1024; // convert kb to mb
+                if (mb > maxMb) { // if the file size is gratter than maxMb
+                    document.getElementById('contact_image_input').value = '';
+                    document.getElementById("err_contact_image").style.display = "block";
+                    return
+                } else {
+                    document.getElementById('contact_image_preview').src = URL.createObjectURL(event.target.files[0]);
+                    document.getElementById('button_delete').src = "https://upload.wikimedia.org/wikipedia/commons/0/0f/Icons8_flat_delete_generic.svg";
+                    document.getElementById("err_contact_image").style.display = "none";
+                }
+            };
+
+
+            button_delete.addEventListener('click',
+                function () {
+                    document.getElementById('contact_image_preview').src = "[[${contactUrl}]]";
+                    document.getElementById('button_delete').src = "";
+                    document.getElementById('contact_image_input').value = '';
+                }); 
+        </script>
+    </section>
+
+</body>
+
+</html>
